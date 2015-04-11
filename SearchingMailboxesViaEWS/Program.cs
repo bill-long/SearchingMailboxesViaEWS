@@ -32,6 +32,7 @@ namespace SearchingMailboxesViaEWS
             var offset = 0;
             const int pageSize = 10;
             FindItemsResults<Item> findItemsResults = null;
+            var moreInterestingItems = true;
             do
             {
                 var view = new ItemView(pageSize, offset);
@@ -45,13 +46,14 @@ namespace SearchingMailboxesViaEWS
                     }
                     else
                     {
+                        moreInterestingItems = false;
                         break;
                     }
                 }
 
                 offset += pageSize;
             } 
-            while (findItemsResults.MoreAvailable);
+            while (findItemsResults.MoreAvailable && moreInterestingItems);
         }
 
         public static void FindItemsByRestrictedView(Folder folder)
